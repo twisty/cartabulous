@@ -2,6 +2,8 @@ var path = require('path');
 
 module.exports = {
 
+  devtool: 'source-map',
+
   entry: path.resolve(__dirname, 'build', 'test.js'),
 
   output: {
