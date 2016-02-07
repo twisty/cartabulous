@@ -1,26 +1,54 @@
 /**
- * Define an initial state.
+ * Cart lines reducer
  */
-const initialState = {
-  lineIds: [],
-  quantityById: {}
+const lines = (state = [], action) => {
+    switch (action.type) {
+        case 'ADD_PRODUCT':
+            // Prevent adding the same id more than once.
+            if (state.indexOf(action.id) !== -1) {
+                return state;
+            }
+            return [...state, action.id];
+        default:
+            return state;
+    }
 }
 
 /**
- * Just a stub reducer.
+ * Quantities reducer
  */
-export default function cart(state = initialState, action) {
-    if (action.type === 'ADD_PRODUCT') {
-        let newState = Object.assign({}, state);
-        // Prevent adding the same id more than once.
-        if (newState.lineIds.indexOf(action.id) !== -1) {
-            // A "do nothing" strategy.
+const quantityById = (state = {}, action) => {
+    switch (action.type) {
+        case 'ADD_PRODUCT':
+            // If a product already exists with this id, increase the quantity.
+            let quantity = (state[action.id] ? state[action.id] : 0) + action.quantity
+            let item = {
+                [action.id]: quantity
+            };
+            return Object.assign({}, state, item);
+        default:
             return state;
-        }
-        newState.lineIds.push(action.id);
-        newState.quantityById[action.id] = action.quantity;
-        return newState;
-    } else {
-        return state;
     }
+}
+
+const detailsById = (state = {}, action) => {
+    switch (action.type) {
+        case 'ADD_PRODUCT':
+            let item = {
+                [action.id]: action.details
+            };
+            return Object.assign({}, state, item);
+        default:
+            return state;
+    }
+}
+/**
+ * Cart reducer.
+ */
+export default function cart(state = {}, action) {
+    return {
+        lines: lines(state.lines, action),
+        quantityById: quantityById(state.quantityById, action),
+        detailsById: detailsById(state.detailsById, action)
+    };
 }
