@@ -2,6 +2,7 @@
   "name": "cartabulous",
   "version": "0.0.0",
   "description": "A fantabulous shopping cart.",
+  "repository": "https://github.com/twisty/cartabulous",
   "main": "lib/main.js",
   "scripts": {
     "start": "webpack-dev-server --port 3000 --content-base build",
