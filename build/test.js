@@ -1,7 +1,8 @@
 import React from 'react';
-import { render } from 'react-dom';
+import {render} from 'react-dom';
 import store from '../src/main.js';
 import Cart from '../src/components/cart.js';
+import {addProduct} from '../src/actions.js';
 
 const update = () => {
     render(
@@ -16,36 +17,6 @@ const update = () => {
 
 store.subscribe(update);
 update();
-
-const addProduct = (id, price, quantity, details = {}) => {
-    return {
-        type: 'ADD_PRODUCT',
-        id: id,
-        price: price,
-        quantity: quantity,
-        details: details
-    }
-};
-
-const removeProduct = (id) => {
-    return {
-        type: 'REMOVE_PRODUCT',
-        id: id
-    }
-};
-
-const changeQuantity = (id, quantity, isDelta = true) => {
-    return {
-        type: 'CHANGE_QUANTITY',
-        id: id,
-        quantity: quantity,
-        isDelta: isDelta
-    }
-};
-
-const setQuantity = (id, quantity) => {
-    return changeQuantity(id, quantity, false);
-};
 
 /**
  * Do something.
