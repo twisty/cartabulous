@@ -16,7 +16,7 @@ class Cart extends Component
             );
         });
         return (
-            <table>
+            <table className="table">
                 <thead>
                     <tr>
                         <th>Product</th>
