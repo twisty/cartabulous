@@ -1,49 +1,39 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { PropTypes } from 'react';
 import Line from './line';
-import * as cartActions from '../actions.js';
 
-class Cart extends Component
-{
-    render() {
-        let lines = this.props.lines.map((id, key) => {
-            return (
-                <Line
-                    id={id}
-                    quantity={this.props.quantityById[id]}
-                    price={10}
-                    {...this.props.detailsById[id]}
-                    key={key}
-                    actions={cartActions}
-                />
-            );
-        });
+const Cart = (props) => {
+    let lines = props.lines.map((id, key) => {
         return (
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Unit Price</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {lines}
-                </tbody>
-            </table>
+            <Line
+                id={id}
+                quantity={props.quantityById[id]}
+                price={10}
+                {...props.detailsById[id]}
+                key={key}
+            />
         );
-    }
+    });
+    return (
+        <table className="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {lines}
+            </tbody>
+        </table>
+    );
 }
 
-const mapStateToProps = (state) => {
-    return {
-        lines: state.lines,
-        quantityById: state.quantityById,
-        detailsById: state.detailsById
-    }
+Cart.propTypes = {
+  lines: PropTypes.array.isRequired,
+  quantityById: PropTypes.object.isRequired,
+  detailsById: PropTypes.object.isRequired
 }
-
-Cart = connect(mapStateToProps)(Cart);
 
 export default Cart;

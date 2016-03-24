@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 
@@ -8,19 +8,17 @@ let Line = (props) => {
         <tr>
             <td>{title || '@todo no title: ' + id}</td>
             <td>{price}</td>
-            <td>
-                <div className="col-xs-3">
-                    <div className="input-group">
-                        <span className="input-group-btn">
-                            <button className="btn btn-default" onClick={onChangeQuantity.bind(this, id, -1)}>-</button>
-                        </span>
-                        <input className="form-control" type="number" onChange={(e) => {
-                            onChangeQuantity(id, Number(e.target.value), false);
-                        }} value={quantity} />
-                        <span className="input-group-btn">
-                            <button className="btn btn-default" onClick={onChangeQuantity.bind(this, id, 1)}>+</button>
-                        </span>
-                    </div>
+            <td className="col-sm-3">
+                <div className="input-group">
+                    <span className="input-group-btn">
+                        <button className="btn btn-default" onClick={onChangeQuantity.bind(this, id, -1)}>-</button>
+                    </span>
+                    <input className="form-control" type="number" onChange={(e) => {
+                        onChangeQuantity(id, Number(e.target.value), false);
+                    }} value={quantity} />
+                    <span className="input-group-btn">
+                        <button className="btn btn-default" onClick={onChangeQuantity.bind(this, id, 1)}>+</button>
+                    </span>
                 </div>
             </td>
             <td>{price * quantity}</td>
