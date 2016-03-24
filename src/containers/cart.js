@@ -1,6 +1,6 @@
 import CartComponent from '../components/cart';
 import { connect } from 'react-redux';
-
+import * as actions from '../actions'
 
 const mapStateToProps = (state) => {
     return {
@@ -10,6 +10,14 @@ const mapStateToProps = (state) => {
     }
 }
 
-const Cart = connect(mapStateToProps)(CartComponent);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onChangeQuantity: (id, value, isDelta = true) => {
+            dispatch(actions.changeQuantity(id, value, isDelta))
+        }
+    }
+}
+
+const Cart = connect(mapStateToProps, mapDispatchToProps)(CartComponent);
 
 export default Cart;

@@ -1,6 +1,4 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux'
-import * as actions from '../actions'
 
 let Line = (props) => {
     const {id, title, price, quantity, onChangeQuantity} = props;
@@ -33,19 +31,5 @@ Line.propTypes = {
   quantity: PropTypes.number.isRequired,
   onChangeQuantity: PropTypes.func.isRequired
 }
-
-const mapStateToProps = (state) => {
-    return {};
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onChangeQuantity: (id, value, isDelta = true) => {
-            dispatch(actions.changeQuantity(id, value, isDelta))
-        }
-    }
-}
-
-Line = connect(mapStateToProps, mapDispatchToProps)(Line);
 
 export default Line;

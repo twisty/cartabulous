@@ -5,11 +5,11 @@ const Cart = (props) => {
     let lines = props.lines.map((id, key) => {
         return (
             <Line
+                key={key}
                 id={id}
                 quantity={props.quantityById[id]}
-                price={10}
                 {...props.detailsById[id]}
-                key={key}
+                onChangeQuantity={props.onChangeQuantity}
             />
         );
     });
@@ -33,7 +33,8 @@ const Cart = (props) => {
 Cart.propTypes = {
   lines: PropTypes.array.isRequired,
   quantityById: PropTypes.object.isRequired,
-  detailsById: PropTypes.object.isRequired
+  detailsById: PropTypes.object.isRequired,
+  onChangeQuantity: PropTypes.func.isRequired
 }
 
 export default Cart;
