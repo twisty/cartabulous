@@ -18,11 +18,23 @@ const lines = (state = [], action) => {
  * Quantities reducer
  */
 const quantityById = (state = {}, action) => {
+    let quantity;
+    let item;
     switch (action.type) {
         case 'ADD_PRODUCT':
             // If a product already exists with this id, increase the quantity.
-            let quantity = (state[action.id] ? state[action.id] : 0) + action.quantity
-            let item = {
+            quantity = (state[action.id] ? state[action.id] : 0) + action.quantity;
+            item = {
+                [action.id]: quantity
+            };
+            return Object.assign({}, state, item);
+        case 'CHANGE_QUANTITY':
+            if (action.isDelta) {
+                quantity = (state[action.id] ? state[action.id] : 0) + action.quantity;
+            } else {
+                quantity = action.quantity;
+            }
+            item = {
                 [action.id]: quantity
             };
             return Object.assign({}, state, item);
@@ -42,6 +54,7 @@ const detailsById = (state = {}, action) => {
             return state;
     }
 }
+
 /**
  * Cart reducer.
  */

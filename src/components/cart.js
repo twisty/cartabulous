@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Line from './line';
+import * as cartActions from '../actions.js';
 
 class Cart extends Component
 {
@@ -12,6 +14,7 @@ class Cart extends Component
                     price={10}
                     {...this.props.detailsById[id]}
                     key={key}
+                    actions={cartActions}
                 />
             );
         });
@@ -32,5 +35,15 @@ class Cart extends Component
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        lines: state.lines,
+        quantityById: state.quantityById,
+        detailsById: state.detailsById
+    }
+}
+
+Cart = connect(mapStateToProps)(Cart);
 
 export default Cart;
