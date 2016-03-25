@@ -58,10 +58,12 @@ const detailsById = (state = {}, action) => {
 /**
  * Cart reducer.
  */
-export default function cart(state = {}, action) {
+const cart = (state = {}, action) => {
     return {
         lines: lines(state.lines, action),
         quantityById: quantityById(state.quantityById, action),
         detailsById: detailsById(state.detailsById, action)
     };
 }
+
+export default cart;

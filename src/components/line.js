@@ -2,10 +2,13 @@ import React, { PropTypes } from 'react';
 
 let Line = (props) => {
     const {id, title, price, quantity, onChangeQuantity} = props;
+    const formatMoney = (amount) => {
+        return '£' + (amount / 100);
+    }
     return (
         <tr>
             <td>{title || '@todo no title: ' + id}</td>
-            <td>{price}</td>
+            <td>{formatMoney(price)}</td>
             <td className="col-sm-3">
                 <div className="input-group">
                     <span className="input-group-btn">
@@ -19,7 +22,7 @@ let Line = (props) => {
                     </span>
                 </div>
             </td>
-            <td>{price * quantity}</td>
+            <td>{formatMoney(price * quantity)}</td>
         </tr>
     );
 }

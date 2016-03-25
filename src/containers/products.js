@@ -7,6 +7,7 @@ let Products = (props) => {
         return (
             <tr key={product.id}>
                 <td>{product.title}</td>
+                <td>£{product.price / 100}</td>
                 <td>
                     <button onClick={() => {
                         let quantity = 1;
