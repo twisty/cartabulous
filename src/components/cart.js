@@ -18,9 +18,8 @@ const Cart = (props) => {
             <thead>
                 <tr>
                     <th>Product</th>
-                    <th>Unit Price</th>
                     <th>Quantity</th>
-                    <th>Total</th>
+                    <th className="text-right">Price</th>
                 </tr>
             </thead>
             <tbody>
