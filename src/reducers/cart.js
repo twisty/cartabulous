@@ -1,14 +1,22 @@
 /**
- * Cart lines reducer
+ * Cart items reducer
  */
-const lines = (state = [], action) => {
+const items = (state = [], action) => {
+    let index;
     switch (action.type) {
-        case 'ADD_PRODUCT':
+        case 'ADD_ITEM':
             // Prevent adding the same id more than once.
             if (state.indexOf(action.id) !== -1) {
                 return state;
             }
             return [...state, action.id];
+        case 'REMOVE_ITEM':
+            // Prevent adding the same id more than once.
+            index = state.indexOf(action.id);
+            return [
+                ...state.slice(0, index),
+                ...state.slice(index + 1)
+            ];
         default:
             return state;
     }
@@ -21,13 +29,17 @@ const quantityById = (state = {}, action) => {
     let quantity;
     let item;
     switch (action.type) {
-        case 'ADD_PRODUCT':
+        case 'ADD_ITEM':
             // If a product already exists with this id, increase the quantity.
             quantity = (state[action.id] ? state[action.id] : 0) + action.quantity;
             item = {
                 [action.id]: quantity
             };
             return Object.assign({}, state, item);
+        case 'REMOVE_ITEM':
+            var newState = Object.assign({}, state);
+            delete newState[action.id];
+            return newState;
         case 'CHANGE_QUANTITY':
             if (action.isDelta) {
                 quantity = (state[action.id] ? state[action.id] : 0) + action.quantity;
@@ -44,12 +56,17 @@ const quantityById = (state = {}, action) => {
 }
 
 const detailsById = (state = {}, action) => {
+    let item;
     switch (action.type) {
-        case 'ADD_PRODUCT':
-            let item = {
+        case 'ADD_ITEM':
+            item = {
                 [action.id]: action.details
             };
             return Object.assign({}, state, item);
+        case 'REMOVE_ITEM':
+            var newState = Object.assign({}, state);
+            delete newState[action.id];
+            return newState;
         default:
             return state;
     }
@@ -60,7 +77,7 @@ const detailsById = (state = {}, action) => {
  */
 const cart = (state = {}, action) => {
     return {
-        lines: lines(state.lines, action),
+        items: items(state.items, action),
         quantityById: quantityById(state.quantityById, action),
         detailsById: detailsById(state.detailsById, action)
     };

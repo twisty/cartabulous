@@ -1,6 +1,6 @@
-export const addProduct = (id, price, quantity, details = {}) => {
+export const addItem = (id, price, quantity, details = {}) => {
     return {
-        type: 'ADD_PRODUCT',
+        type: 'ADD_ITEM',
         id: id,
         price: price,
         quantity: quantity,
@@ -8,9 +8,9 @@ export const addProduct = (id, price, quantity, details = {}) => {
     }
 };
 
-export const removeProduct = (id) => {
+export const removeItem = (id) => {
     return {
-        type: 'REMOVE_PRODUCT',
+        type: 'REMOVE_ITEM',
         id: id
     }
 };

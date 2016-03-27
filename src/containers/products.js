@@ -4,16 +4,30 @@ import * as actions from '../actions'
 
 let Products = (props) => {
     let productNodes = props.products.map(product => {
+        const { id, title, price } = product;
+        const quantity = props.quantityById[id];
+        const inBasketBadge = () => {
+            if (quantity) {
+                return (
+                    <span className="badge">{quantity}</span>
+                );
+            }
+            return null;
+        }
+        const buttonText = () => {
+            return (quantity) ? ' In cart, add another' : 'Add to cart';
+        }
         return (
-            <tr key={product.id}>
-                <td>{product.title}</td>
-                <td>£{product.price / 100}</td>
+            <tr key={id}>
+                <td>{title}</td>
+                <td>£{(price / 100).toFixed(2)}</td>
                 <td>
-                    <button onClick={() => {
+                    <button className="btn btn-primary" onClick={() => {
                         let quantity = 1;
-                        props.dispatch(actions.addProduct(product.id, product.price, quantity, product));
-                        console.log(product);
-                    }}>Add to cart</button>
+                        props.dispatch(
+                            actions.addItem(id, price, quantity, product)
+                        );
+                    }}>{inBasketBadge()}{buttonText()}</button>
                 </td>
             </tr>
         );
@@ -28,9 +42,28 @@ let Products = (props) => {
 }
 
 Products.propTypes = {
-    products: PropTypes.array.isRequired
+    // `dispatch` is added by Redux
+    dispatch: PropTypes.func,
+    products: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            title: PropTypes.string.isRequired,
+            description: PropTypes.oneOfType([
+                PropTypes.string,
+                PropTypes.element
+            ]),
+            price: PropTypes.number.isRequired
+        })
+    ).isRequired,
+    quantityById: PropTypes.object.isRequired
 };
 
-Products = connect()(Products);
+const mapStateToProps = (state) => {
+    return {
+        quantityById: state.quantityById
+    }
+}
+
+Products = connect(mapStateToProps)(Products);
 
 export default Products;

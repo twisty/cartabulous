@@ -1,15 +1,16 @@
 import React, { PropTypes } from 'react';
-import Line from './line';
+import CartItem from './cart-item';
 
 const Cart = (props) => {
-    let lines = props.lines.map((id, key) => {
+    let items = props.items.map((id, key) => {
         return (
-            <Line
+            <CartItem
                 key={key}
                 id={id}
                 quantity={props.quantityById[id]}
                 {...props.detailsById[id]}
                 onChangeQuantity={props.onChangeQuantity}
+                onRemoveItem={props.onRemoveItem}
             />
         );
     });
@@ -23,17 +24,18 @@ const Cart = (props) => {
                 </tr>
             </thead>
             <tbody>
-                {lines}
+                {items}
             </tbody>
         </table>
     );
 }
 
 Cart.propTypes = {
-  lines: PropTypes.array.isRequired,
-  quantityById: PropTypes.object.isRequired,
-  detailsById: PropTypes.object.isRequired,
-  onChangeQuantity: PropTypes.func.isRequired
+    items: PropTypes.array.isRequired,
+    quantityById: PropTypes.object.isRequired,
+    detailsById: PropTypes.object.isRequired,
+    onChangeQuantity: PropTypes.func.isRequired,
+    onRemoveItem: PropTypes.func.isRequired
 }
 
 export default Cart;

@@ -1,9 +1,3 @@
-import { createStore } from 'redux';
-import { default as cart } from './reducers/cart';
-
-/**
- * Create a redux store.
+/*
+ * @todo Need to think about what should be here.
  */
-let store = createStore(cart);
-
-export default store;
