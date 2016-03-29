@@ -6,7 +6,7 @@
   "main": "lib/main.js",
   "scripts": {
     "start": "webpack-dev-server --port 3000 --content-base example",
-    "docs": "docco ./src/**/*.js ./example/**/*.js",
+    "docs": "docco ./src/**/*.js ./example/*.js",
     "eslint": "eslint ./src/**/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -27,6 +27,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "eslint": "^2.5.1",
     "eslint-plugin-react": "^4.2.3",
+    "react-addons-css-transition-group": "^0.14.7",
     "webpack": "^1.12.12",
     "webpack-dev-server": "^1.14.1"
   }

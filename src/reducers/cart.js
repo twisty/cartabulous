@@ -27,6 +27,7 @@ const items = (state = [], action) => {
  */
 const quantityById = (state = {}, action) => {
     let quantity;
+    let newState;
     let item;
     switch (action.type) {
         case 'ADD_ITEM':
@@ -35,9 +36,9 @@ const quantityById = (state = {}, action) => {
             item = {
                 [action.id]: quantity
             };
-            return Object.assign({}, state, item);
+            return {...state, ...item};
         case 'REMOVE_ITEM':
-            var newState = Object.assign({}, state);
+            newState = {...state};
             delete newState[action.id];
             return newState;
         case 'CHANGE_QUANTITY':
@@ -49,7 +50,7 @@ const quantityById = (state = {}, action) => {
             item = {
                 [action.id]: quantity
             };
-            return Object.assign({}, state, item);
+            return {...state, ...item};
         default:
             return state;
     }
@@ -62,9 +63,9 @@ const detailsById = (state = {}, action) => {
             item = {
                 [action.id]: action.details
             };
-            return Object.assign({}, state, item);
+            return {...state, ...item};
         case 'REMOVE_ITEM':
-            var newState = Object.assign({}, state);
+            var newState = {...state};
             delete newState[action.id];
             return newState;
         default:

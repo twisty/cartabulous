@@ -25,5 +25,8 @@ export const changeQuantity = (id, quantity, isDelta = true) => {
 };
 
 export const setQuantity = (id, quantity) => {
+    if (quantity === 0) {
+        return removeItem(id);
+    }
     return changeQuantity(id, quantity, false);
 };

@@ -7,33 +7,51 @@ let Products = (props) => {
         const inBasketBadge = () => {
             if (quantity) {
                 return (
-                    <span className="badge">{quantity}</span>
+                    <span className="text-muted small">({quantity} in cart)</span>
                 );
             }
             return null;
         }
         const buttonText = () => {
-            return (quantity) ? ' In cart, add another' : 'Add to cart';
+            return (quantity) ? ' Add another' : 'Add to cart';
         }
         return (
-            <tr key={id}>
-                <td>{title}</td>
-                <td>£{(price / 100).toFixed(2)}</td>
-                <td>
-                    <button className="btn btn-primary" onClick={() => {
-                        let quantity = 1;
-                        props.onAddItem(id, price, quantity, product)
-                    }}>{inBasketBadge()}{buttonText()}</button>
-                </td>
-            </tr>
+            <div className="card" key={id}>
+                <div className="card-block">
+                    <div className="row">
+                        <div className="col-sm-8">
+                            <h4 className="card-title">{title}</h4>
+                            <p className="card-title">A description goes here.</p>
+                        </div>
+                        <div className="col-sm-4">
+                            <div className="row">
+                                <div className="col-xs-6">
+                                    <p className="card-text">{inBasketBadge()}</p>
+                                </div>
+                                <div className="col-xs-6 text-xs-right">
+                                    <p className="card-text"><b>£{(price / 100).toFixed(2)}</b></p>
+                                </div>
+                            </div>
+                            <p className="card-text">
+                                <button
+                                    type="button"
+                                    className="btn btn-primary-outline btn-block"
+                                    onClick={() => {
+                                        let quantity = 1;
+                                        props.onAddItem(id, price, quantity, product)
+                                    }}
+                                >{buttonText()}</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         );
     });
     return (
-        <table className="table">
-            <tbody>
+        <div>
                 {productNodes}
-            </tbody>
-        </table>
+        </div>
     )
 }
 

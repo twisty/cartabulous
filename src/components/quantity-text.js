@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class QuantityText extends Component {
 
@@ -33,14 +34,8 @@ class QuantityText extends Component {
         }
     };
 
-    renderUpdateButton() {
-        let updateable = (this.state.typedValue !== this.props.value) && (this.state.typedValue !== '');
-        if (updateable) {
-            return (
-                <button className="btn btn-default btn-sm" onClick={this.updateAction}>Update</button>
-            );
-        }
-        return null;
+    shouldShowUpdateButton() {
+        return (this.state.typedValue !== this.props.value) && (this.state.typedValue !== '');
     }
 
     render() {
@@ -63,25 +58,43 @@ class QuantityText extends Component {
                 this.updateAction();
             }
         }
+        let input = (
+            <input
+                className="form-control"
+                ref="input"
+                value={this.state.typedValue}
+                onKeyDown={handleKeyDown}
+                onChange={handleChange}
+            />
+        );
+        let updateButton = null;
+        if (this.shouldShowUpdateButton()) {
+            updateButton = (
+                <button
+                    key="updatebutton"
+                    type="button"
+                    className="btn btn-sm btn-success-outline"
+                    onClick={this.updateAction}
+                ><span className="fa fa-refresh"></span> Update</button>
+            );
+        }
         return (
             <div>
-                <input
-                    className="form-control"
-                    ref="input"
-                    value={this.state.typedValue}
-                    onKeyDown={handleKeyDown}
-                    onChange={handleChange}
-                />
-                {this.renderUpdateButton()}
+                {input}
+                <div>
+                <ReactCSSTransitionGroup transitionName="fade" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+                    {updateButton}
+                </ReactCSSTransitionGroup>
+                </div>
             </div>
         )
     }
 }
 
 QuantityText.propTypes = {
-  active: PropTypes.bool.isRequired,
-  value: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired
+    active: PropTypes.bool.isRequired,
+    value: PropTypes.number.isRequired,
+    onChange: PropTypes.func.isRequired
 }
 
 export default QuantityText;

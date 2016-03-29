@@ -30,9 +30,9 @@ class CartItem extends Component {
         return '£' + (amount / 100).toFixed(2);
     }
 
-    onChangeQuantityViaSelect = (newQuantity) => {
+    onSetQuantityViaSelect = (newQuantity) => {
         if (newQuantity < 10) {
-            this.props.onChangeQuantity(this.props.id, newQuantity, false);
+            this.props.onSetQuantity(this.props.id, newQuantity);
         } else {
             this.setState({
                 freshTyping: true
@@ -40,8 +40,8 @@ class CartItem extends Component {
         }
     };
 
-    onChangeQuantityViaTyping= (newQuantity) => {
-        this.props.onChangeQuantity(this.props.id, newQuantity, false);
+    onSetQuantityViaTyping= (newQuantity) => {
+        this.props.onSetQuantity(this.props.id, newQuantity);
         this.setState({
             freshTyping: false
         });
@@ -57,11 +57,28 @@ class CartItem extends Component {
         }
         return (
             <select value={quantity} className="form-control" onChange={(e) => {
-                this.onChangeQuantityViaSelect(Number(e.target.value));
+                this.onSetQuantityViaSelect(Number(e.target.value));
             }}>
                 {quantityOptions}
                 <option value={10}>10+</option>
             </select>
+        );
+    }
+
+    deleteButton() {
+        const {id} = this.props;
+        const handleRemoveClick = () => {
+            this.props.onRemoveItem(id);
+        }
+        return (
+            <button
+                type="button"
+                className="btn btn-default btn-sm btn-danger-outline"
+                onClick={handleRemoveClick}
+            ><span
+                className="fa fa-remove"
+                aria-hidden="true"
+            ></span> Remove</button>
         );
     }
 
@@ -75,26 +92,31 @@ class CartItem extends Component {
                 <QuantityText
                     active={this.state.freshTyping}
                     value={quantity}
-                    onChange={this.onChangeQuantityViaTyping}
+                    onChange={this.onSetQuantityViaTyping}
                 />
             );
         }
-        const handleRemoveClick = () => {
-            this.props.onRemoveItem(id);
-        }
         return (
-            <tr>
-                <td>
-                    <p><strong>{title || '@todo no title: ' + id}</strong></p>
-                    <p>Short description goes here.</p>
-                    <p><button className="btn btn-danger btn-xs" onClick={handleRemoveClick}>Remove</button></p>
-                </td>
-                <td className="col-xs-2">{quantitySelect}</td>
-                <td className="col-xs-2 text-right">
-                    {this.formatMoney(price * quantity)}
-                    {(quantity > 1) ? (<p className="text-muted">({this.formatMoney(price)} each)</p>) : null}
-                </td>
-            </tr>
+                <div className="row" style={{
+                    margin: '0',
+                    padding: '1em 0',
+                    borderTop: '1px solid #ccc'
+                }}>
+                    <div className="col-sm-8">
+                        <p><strong>{title || '@todo no title: ' + id}</strong></p>
+                        <p>Short description goes here.</p>
+                        <p>{this.deleteButton()}</p>
+                    </div>
+                    <div className="col-sm-2">
+                        {quantitySelect}
+                    </div>
+                    <div className="col-sm-2 text-xs-right">
+                            <p className="form-control-static">
+                                <b>{this.formatMoney(price * quantity)}</b>
+                            </p>
+                        {(quantity > 1) ? (<p className="text-muted small">({this.formatMoney(price)} each)</p>) : null}
+                    </div>
+                </div>
         );
     }
 }
@@ -104,7 +126,7 @@ CartItem.propTypes = {
     title: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     quantity: PropTypes.number.isRequired,
-    onChangeQuantity: PropTypes.func.isRequired,
+    onSetQuantity: PropTypes.func.isRequired,
     onRemoveItem: PropTypes.func.isRequired
 }
 

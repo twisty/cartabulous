@@ -15,6 +15,9 @@ const mapDispatchToProps = (dispatch) => {
         onChangeQuantity: (id, value, isDelta = true) => {
             dispatch(actions.changeQuantity(id, value, isDelta))
         },
+        onSetQuantity: (id, value) => {
+            dispatch(actions.setQuantity(id, value))
+        },
         onRemoveItem: (id) => {
             dispatch(actions.removeItem(id))
         }
