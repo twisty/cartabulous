@@ -15,18 +15,26 @@ export const removeItem = (id) => {
     }
 };
 
-export const changeQuantity = (id, quantity, isDelta = true) => {
+// Change the quantity of an item by delta.
+//
+// Use this action to increment / deincrement the quantity.
+export const changeQuantity = (id, quantityDelta) => {
     return {
         type: 'CHANGE_QUANTITY',
         id: id,
-        quantity: quantity,
-        isDelta: isDelta
+        quantityDelta: quantityDelta
     }
 };
 
+// Set the quantity for an item.
 export const setQuantity = (id, quantity) => {
+    // XXX don't know it this check should be here, or logic in the reducer?
     if (quantity === 0) {
         return removeItem(id);
     }
-    return changeQuantity(id, quantity, false);
+    return {
+        type: 'SET_QUANTITY',
+        id: id,
+        quantity: quantity
+    }
 };

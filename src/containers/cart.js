@@ -12,8 +12,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onChangeQuantity: (id, value, isDelta = true) => {
-            dispatch(actions.changeQuantity(id, value, isDelta))
+        onChangeQuantity: (id, value) => {
+            dispatch(actions.changeQuantity(id, value))
         },
         onSetQuantity: (id, value) => {
             dispatch(actions.setQuantity(id, value))
