@@ -41,7 +41,7 @@ const localStorageMiddleware = ({ getState }) => {
 const applicationStateJson = localStorage.getItem('applicationState') || '{}';
 const applicationState = JSON.parse(applicationStateJson);
 
-// Create a the Redux store.
+// Create the Redux store.
 const store = createStore(
     cartReducer,
     applicationState,
