@@ -98,7 +98,7 @@ class CartItem extends Component {
         }
         return (
                 <div className="row" style={{
-                    margin: '0',
+                    margin: 0,
                     padding: '1em 0',
                     borderTop: '1px solid #ccc'
                 }}>
