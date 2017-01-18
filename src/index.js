@@ -61,5 +61,5 @@ render(
             <Cart />
         </div>
     </Provider> ,
-    document.getElementById('cart')
+    document.getElementById('root')
 );
